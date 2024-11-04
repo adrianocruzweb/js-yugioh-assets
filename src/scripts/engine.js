@@ -9,6 +9,12 @@ const state = {
         name: document.getElementById('card_name'),
         type: document.getElementById('card_type'),
     },
+    playerSides: {
+        player: "player_cards",
+        playerBOX: document.getElementById('player_cards'),
+        computer: "computer_cards",
+        computerBOX: document.getElementById('computer_cards'),
+    },
     fieldCards: {
         player: document.getElementById('player_field_card'),
         computer: document.getElementById('computer_field_card'),
@@ -45,23 +51,17 @@ const cardData = [
     },
 ];
 
-const playerSides = {
-    player1: "player_cards",
-    computer: "computer_cards",
-};
-
 const getRandomCardId = async () => {
     const randomIndex = Math.floor(Math.random() * cardData.length);
     return cardData[randomIndex].id;
 }
 
 const removeAllCardsImages = async () => {
-    let cards = document.querySelector("#computer_cards");
-    let imgElements = cards.querySelectorAll("img");
+    let {computerBOX, playerBOX} = state.playerSides;
+    let imgElements = computerBOX.querySelectorAll("img");
     imgElements.forEach((img) => img.remove());
 
-    cards = document.querySelector("#player_cards");
-    imgElements = cards.querySelectorAll("img");
+    imgElements = playerBOX.querySelectorAll("img");
     imgElements.forEach((img) => img.remove());
 }
 
@@ -96,7 +96,7 @@ const createCardImage = async (randomIdCard, fieldSide) => {
     cardImage.setAttribute("data-id", randomIdCard);
     cardImage.classList.add("card");
 
-    if(fieldSide === playerSides.player1){
+    if(fieldSide === state.playerSides.player){
         cardImage.addEventListener("click", ()=>{
             setCardsField(cardImage.getAttribute("data-id"));
         })
@@ -119,8 +119,8 @@ const drawCards = async (cardNumbers, fieldSide) => {
 }
 
 const init = () => {
-    drawCards(5,playerSides.player1);
-    drawCards(5,playerSides.computer);
+    drawCards(5,state.playerSides.player);
+    drawCards(5,state.playerSides.computer);
 }
 
 init();
