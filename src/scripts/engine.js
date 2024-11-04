@@ -4,7 +4,7 @@ const state = {
         computerScore: 0,
         scoreBox: document.getElementsByClassName('score_points'),
     },
-    cardsSprites: {
+    cardSprites: {
         avatar: document.getElementById('card_image'),
         name: document.getElementById('card_name'),
         type: document.getElementById('card_type'),
@@ -55,6 +55,40 @@ const getRandomCardId = async () => {
     return cardData[randomIndex].id;
 }
 
+const removeAllCardsImages = async () => {
+    let cards = document.querySelector("#computer_cards");
+    let imgElements = cards.querySelectorAll("img");
+    imgElements.forEach((img) => img.remove());
+
+    cards = document.querySelector("#player_cards");
+    imgElements = cards.querySelectorAll("img");
+    imgElements.forEach((img) => img.remove());
+}
+
+const setCardsField = async (cardID) => {
+    await removeAllCardsImages();
+
+    let computerCardID = await getRandomCardId();
+
+    state.fieldCards.player.style.display = 'block';
+    state.fieldCards.computer.style.display = 'block';
+
+    state.fieldCards.player.src = cardData[cardID].img;
+    state.fieldCards.computer.src = cardData[computerCardID].img;
+
+    let duelResults = await checkDuelResults(cardID, computerCardID);
+
+    await updateScore();
+    await drawButton(duelResults);
+
+}
+
+const drawSelectCard = async (index) => {
+    state.cardSprites.avatar.src = cardData[index].img;
+    state.cardSprites.name.innerText = cardData[index].name;
+    state.cardSprites.type.innerText = "Atribute : " + cardData[index].type;
+}
+
 const createCardImage = async (randomIdCard, fieldSide) => {
     const cardImage = document.createElement("img");
     cardImage.setAttribute("height","100px");
@@ -69,7 +103,7 @@ const createCardImage = async (randomIdCard, fieldSide) => {
     }
 
     cardImage.addEventListener("mouseover", ()=>{
-        drawSelectCard(idCard);
+        drawSelectCard(randomIdCard);
     })
 
     return cardImage;
