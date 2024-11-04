@@ -20,6 +20,34 @@
     <title>YU-GI-OH JO-KEN-PO</title>
 </head>
 <body>
+
+    <div class="bg-video">
+        <video class="bg_video" autoplay loop muted>
+            <source class="video" src="./src/assets/video/yugi.mp4" type="video/mp4"/>
+        </video>
+    </div>
+    <div class="container">
+        <div class="container__left framed-golden-2">
+            <div class="score_box frame">
+                <span id="score_points">Win: 0 | Lose: 0</span>
+            </div>
+            <div class="menu_avatar">
+                <img id="card_image">
+            </div>
+            <div class="card_details">
+                <p id="card_name"></p>
+                <p id="card_type"></p>
+            </div>
+        </div>
+        <div class="container__right">
+            <div class="card_box_container">
+
+            </div>
+        </div>
+    </div>
+
+
+
     <script src="src/scripts/engine.js" defer></script>
 </body>
 </html>
