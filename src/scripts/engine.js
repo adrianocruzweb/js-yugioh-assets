@@ -16,7 +16,7 @@ const state = {
     button: document.getElementById('next_duel')
 };
 
-const pathImg = ".src/assets/icons/";
+const pathImg = "./src/assets/icons/";
 
 const cardData = [
     {
@@ -46,13 +46,33 @@ const cardData = [
 ];
 
 const playerSides = {
-    player1: "player_field_card",
-    computer: "computer_field_card",
+    player1: "player_cards",
+    computer: "computer_cards",
 };
 
-const getRamdomCardId = async () => {
+const getRandomCardId = async () => {
     const randomIndex = Math.floor(Math.random() * cardData.length);
     return cardData[randomIndex].id;
+}
+
+const createCardImage = async (randomIdCard, fieldSide) => {
+    const cardImage = document.createElement("img");
+    cardImage.setAttribute("height","100px");
+    cardImage.setAttribute("src","./src/assets/icons/card-back.png");
+    cardImage.setAttribute("data-id", randomIdCard);
+    cardImage.classList.add("card");
+
+    if(fieldSide === playerSides.player1){
+        cardImage.addEventListener("click", ()=>{
+            setCardsField(cardImage.getAttribute("data-id"));
+        })
+    }
+
+    cardImage.addEventListener("mouseover", ()=>{
+        drawSelectCard(idCard);
+    })
+
+    return cardImage;
 }
 
 const drawCards = async (cardNumbers, fieldSide) => {
