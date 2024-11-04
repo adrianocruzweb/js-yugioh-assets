@@ -8,9 +8,8 @@
     justify-content: center;
 }
 
-.bg_video .video {
+.bg_video video {
     height: 100vh;
-
 }
 
 .bg_video::after { /*  ::after , ::before omo se tivesse qcriado um elemento depois do elemento que tem a classe*/
@@ -26,7 +25,6 @@
         rgba(0, 0, 0, 0.8) 50%,
         rgba(0, 0, 0, 1) 100%
     );
-    pointer-events: none; /* Isso garante que o gradiente não interfira na interação com o vídeo */
 }
 
 
@@ -43,6 +41,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+
+.container__right {
+    width: 65%;
 }
 
 .score_box {
@@ -72,4 +74,50 @@
 
 #card_type {
     font-size: 1rem;
+}
+
+.card_box_container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.3rem;
+}
+
+.card_versus_container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.2rem;
+    margin-top: 5rem;
+}
+
+.versus_top,
+.versus_bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.versus_bottom {
+    margin-top:1rem;
+}
+
+#next_duel {
+    display: none;
+}
+
+.card_box {
+    height: 9rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.card_infield {
+    height: 11.2rem;
+    width: 8rem;
+    border: 1px solid #fff;
+    border-radius: 8px;
 }
