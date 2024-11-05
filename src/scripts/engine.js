@@ -107,6 +107,12 @@ const checkDuelResults = async (playerCardId, computerCardId) => {
 
 }
 
+const hiddenCardDetails = async () => {
+    state.cardSprites.avatar.src = "";
+    state.cardSprites.name.innerText = "";
+    state.cardSprites.type.innerText = "";
+}
+
 const drawButton = async (text) => {
     state.actions.button.innerText = text;
     state.actions.button.style.display = "block";
@@ -118,16 +124,33 @@ const updateScore = async () => {
      | Lose: ${state.score.computerScore}`;
 }
 
+const showHiddenCardDetails = async (value) => {
+    if(value === true) {
+        state.fieldCards.player.style.display = 'block';
+        state.fieldCards.computer.style.display = 'block';
+    }
+
+    if(value === false) {
+        state.fieldCards.player.style.display = 'none';
+        state.fieldCards.computer.style.display = 'none';
+    }
+}
+
+const drawCardsInField = async (cardID, computerCardID) => {
+    state.fieldCards.player.src = cardData[cardID].img;
+    state.fieldCards.computer.src = cardData[computerCardID].img;
+}
+
 const setCardsField = async (cardID) => {
     await removeAllCardsImages();
 
     let computerCardID = await getRandomCardId();
 
-    state.fieldCards.player.style.display = 'block';
-    state.fieldCards.computer.style.display = 'block';
+    await showHiddenCardDetails(true);
 
-    state.fieldCards.player.src = cardData[cardID].img;
-    state.fieldCards.computer.src = cardData[computerCardID].img;
+    await hiddenCardDetails();
+
+    await drawCardsInField(cardID, computerCardID);
 
     let duelResults = await checkDuelResults(cardID, computerCardID);
 
@@ -172,6 +195,11 @@ const drawCards = async (cardNumbers, fieldSide) => {
 }
 
 const init = () => {
+    showHiddenCardDetails(false);
+
+    const bgm = document.getElementById("bgm");
+    bgm.play();
+
     drawCards(5,state.playerSides.player);
     drawCards(5,state.playerSides.computer);
 }
