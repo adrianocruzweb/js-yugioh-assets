@@ -63,6 +63,16 @@ const resetDuel = async () => {
     init();
 }
 
+const playAudio = async (status) => {
+    const audio = new Audio(`./src/assets/audios/${status}.wav`);
+    try {
+        audio.play();
+    } catch (error) {
+        console.error("OK não temos som de empate");
+    }
+
+}
+
 const getRandomCardId = async () => {
     const randomIndex = Math.floor(Math.random() * cardData.length);
     return cardData[randomIndex].id;
@@ -78,18 +88,20 @@ const removeAllCardsImages = async () => {
 }
 
 const checkDuelResults = async (playerCardId, computerCardId) => {
-    let duelResults = "Empate";
+    let duelResults = "draw";
     let playerCard = cardData[playerCardId];
 
     if(playerCard.WinOf.includes(computerCardId)){
-        duelResults = "Ganhou";
+        duelResults = "WIN";
         state.score.playerScore++;
     }
 
     if(playerCard.LoseOf.includes(computerCardId)){
-        duelResults = "Perdeu";
+        duelResults = "LOSE";
         state.score.computerScore++;
     }
+
+    await playAudio(duelResults.toLowerCase());
 
     return duelResults;
 
